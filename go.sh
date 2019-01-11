@@ -4,7 +4,7 @@
 docker run -d -p 8081:8081 --name nexus sonatype/nexus3
 
 # let it start up ...
-( tail -f -n0 logfile.log & ) | grep -q "Started Sonatype Nexus OSS 3.14.0-04"
+( docker logs -f nexus & ) | grep -q "Started Sonatype Nexus*"
 #sleep 4m
 
 # publish our scripts
