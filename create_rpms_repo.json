@@ -1,0 +1,5 @@
+{
+  "name": "create_rpms_repo",
+  "type": "groovy",
+  "content": "repository.createRawHosted('rpms')"
+}

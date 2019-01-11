@@ -1,0 +1,5 @@
+{
+  "name": "create_maven_snapshots_repo",
+  "type": "groovy",
+  "content": "repository.createMavenHosted('snapshots', 'default', true, org.sonatype.nexus.repository.maven.VersionPolicy.SNAPSHOT, org.sonatype.nexus.repository.storage.WritePolicy.ALLOW, org.sonatype.nexus.repository.maven.LayoutPolicy.STRICT)"
+}
