@@ -4,7 +4,8 @@
 docker run -d -p 8081:8081 --name nexus sonatype/nexus3
 
 # let it start up ...
-sleep 4m
+( tail -f -n0 logfile.log & ) | grep -q "Started Sonatype Nexus OSS 3.14.0-04"
+#sleep 4m
 
 # publish our scripts
 curl -v -X POST -u "admin:admin123" --header "Content-Type: application/json" "http://192.168.99.101:8081/service/rest/v1/script" -d @create_maven_releases_repo.json
