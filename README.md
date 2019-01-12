@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Its great that Docker allows us to throw applications up really quickly, with zero knowledge of their required environment.
+Docker allows us to throw applications up really quickly, with zero knowledge of their required environment.
 However, most applications require a little configuration before they are 'instantly' useful to us.
 SonarType Nexus is a popular repository manager (similar to Artefactory).
 Getting Nexus up and runnign using its Docker image is a breeze, but provides only the default repositories.
@@ -21,8 +21,8 @@ Let's do that with Docker:
 
 > docker run -d -p 8081:8081 --name nexus sonatype/nexus3
 
-We will need to give Nexus some time to start up before any requests can be properly handled.
-We could manually follow the logs, but let's do it in bash instead:
+We must also give Nexus some time to start up before any requests can be properly handled.
+Manually following the logs is one option, but bash can save us the eye strain:
 
 >  ( docker logs -f nexus & ) | grep -q "Started Sonatype Nexus*"
 
@@ -39,12 +39,12 @@ then publish this script to Nexus,
 then tell nexus to run it.
 And oh, did I mention, the groovy script needs to be nested within a Json document.
 
-Once youve done it once, its easy. So lets save you some stress, and I'll walk through the process.
+Once youve done it once, its easy. So lets save you some stress, and walk through the process.
 
 ## Creating Nexus 3 repos using JSON and the Nexus Groovy DSL
 
 Having to nest our script in Json is not so bad for small scripts - and luckily the DSL in groovy is quite kurt.
-If your from a Java background, just think of it as pre-prepared instance variable ('repository') that you can call methods on.
+If your from a Java background, just think of it as a pre-prepared instance variable ('repository') that you can call methods on.
 Let's see an example of a JSON file containing groovy DSL that creates a maven 'releases' repo.
 We put the name of the JSON file (without the extension) as the 'name'.
 The Groovy script goes into the 'content' value.
@@ -57,8 +57,8 @@ The Groovy script goes into the 'content' value.
 }
 </pre>
 
-Don't bother checking the Nexus site for a list of repository creation methid signatures.
-The recommendationm is that you use code completion (in IntelliJ for example) as documentation.
+Don't bother checking the Nexus site for a list of repository creation method signatures.
+The recommendation is that you use code completion (in IntelliJ for example) as documentation.
 Instructions on how to do this is provided.
 Its a little fiddly, but workable if your familiar with IntelliJ.
 
@@ -68,7 +68,7 @@ The Docker Nexus container should now be available - on my system at 192.169.99.
 
 > curl -v -X POST -u "admin:admin123" --header "Content-Type: application/json" "http://192.168.99.101:8081/service/rest/v1/script" -d @create_maven_releases_repo.json
 
-If ll goes well, you shoulf get something like the following:
+If ll goes well, you should get something like the following:
 
 <pre>
 * About to connect() to 192.168.99.101 port 8081 (#0)
@@ -93,7 +93,7 @@ If ll goes well, you shoulf get something like the following:
 
 Don't bother checking the Nexus GUI yet, all we've done so far is 'publish' the Groovy script.
 We still need to run it.
-You can check its there ready to run by saying:
+You can check its there ready to run if you like:
 
 > curl -v -X GET -u "admin:admin123" "http://192.168.99.101:8081/service/rest/v1/script"
 
@@ -123,7 +123,7 @@ Run the script:
 
 > curl -X POST -u "admin:admin123" --header "Content-Type: text/plain" "http://192.168.99.101:8081/service/rest/v1/script/create_maven_releases_repo/run"
 
-If all goes well, you should now see the new 'releases; repo in the Nexus GUI:
+If all goes well, you should now see the new 'releases' repo in the Nexus GUI:
 
 ## Conclusion
 
